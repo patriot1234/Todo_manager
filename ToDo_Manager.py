@@ -5,6 +5,7 @@ tasks = []
 
 
 def load_tasks():
+    """Load tasks from the text file."""
     if tasks_file.exists():
         with tasks_file.open("r", encoding="utf-8") as file:
             tasks = file.readlines()
@@ -16,14 +17,42 @@ def load_tasks():
 
 
 def save_tasks(tasks):
+    """Save tasks to the text file."""
     with tasks_file.open("w", encoding="utf-8") as file:
         for item in tasks:
             file.write(item + "\n")
 
 
 def sort_list(tasks):
+    """Sort tasks by time and renumber them."""
     tasks.sort(key=lambda x: x.split()[-1])
     return [f"{i}-{task.split('-',1)[-1]}" for i, task in enumerate(tasks, 1)]
+
+def remove_task():
+    """Delete a task from the list."""
+
+    tasks = load_tasks()
+
+    if len(tasks) == 0:
+        print("List is empty")
+        return
+
+    for task in tasks:
+        print(task)
+
+    try:
+        remove = int(input("Enter task number: "))
+
+        if 1 <= remove <= len(tasks):
+            tasks.pop(remove - 1)
+            tasks = sort_list(tasks)
+            save_tasks(tasks)
+            print("Task deleted")
+        else:
+            print("Invalid task number")
+
+    except ValueError:
+        print("Please enter a number")
 
 
 while True:
@@ -63,28 +92,8 @@ while True:
         save_tasks(tasks)
 
     elif choice == 3:
-        tasks = load_tasks()
-
-        if len(tasks) == 0:
-            print("List is empty")
-            continue
-
-        for task in tasks:
-            print(task)
-
-        try:
-            remove = int(input("Enter task number: "))
-
-            if 1 <= remove <= len(tasks):
-                tasks.pop(remove - 1)
-                tasks = sort_list(tasks)
-                save_tasks(tasks)
-                print("Task deleted")
-            else:
-                print("Invalid task number")
-
-        except ValueError:
-            print("Please enter a number")
+        remove_task()
+   
 
     elif choice == 0:
         break

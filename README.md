@@ -20,10 +20,27 @@ cd Todo_manager
 
 ## Run
 
+Activate the virtual environment:
+
+```bash
+.venv\Scripts\activate
+```
+
+Run the program:
+
 ```bash
 python ToDo_Manager.py
 ```
 
+---
+
+## Install Dependencies
+
+Install the required dependencies from `requirements.txt`:
+
+```bash
+pip install -r requirements.txt
+```
 ---
 
 ## Main Menu
